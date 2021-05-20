@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.bootcss.com/pure/1.0.1/pure-min.css" rel="stylesheet">
+</head>
+
+<body style="display: flex;flex-direction: column   ;align-items:center">
+    <h1>随机数生成器</h1>
+    <form action="" class="pure-form" id="app-main" style="text-align: center;">
+        <span>请输入起始数:</span><input type="number" name="" id="n_start" min="0" max="100000000"><br><br>
+        <span>请输入结束数:</span><input type="number" name="" id="n_stop" min="0" max="100000000"><br><br>
+        <span>请输入个数:</span><input type="number" name="" id="n_num" min="0" max="100000000"><br><br>
+        <span>允许重复:</span><input type="checkbox" name="" id="issame"><br><br>
+        <input type="button" value="开始" class="pure-button pure-button-primary" onclick="random_num()">&nbsp;
+        <input type="reset" value="重置" class="pure-button pure-button-primary" onclick="clear_res()"><br><br>
+        <h2 style="display: none;" id="isshow">结果</h2><br>
+        <p id="res" style="display: none;"></p>
+    </form>
+
+</body>
+<script>
+    function random_num() {
+        let nstart = document.querySelector('#n_start').value
+        let nstop = document.querySelector('#n_stop').value
+        let nnum = document.querySelector('#n_num').value
+        let fstart = parseInt(nstart)
+        let fstop = parseInt(nstop)
+        if (fstop <= fstart) {
+            alert('您的输入有误')
+        }
+        else {
+            let tnum = []
+            let dif = fstop - fstart
+            if (dif < nnum) {
+                alert('您的输入有误')
+            }
+            else {
+                clear_res()
+                document.querySelector('#isshow').style.display = 'inline'
+                document.querySelector('#res').style.display = 'inline'
+                for (i = 0; i < nnum; i++) {
+                    tnum[i] = parseInt(Math.random() * 100000000 % dif) + fstart
+                    if (document.querySelector('#issame').checked == false && i > 0) {
+                        for (j = 0; j < i; j++) {
+                            if (tnum[i] == tnum[j]) {
+                                tnum[i] = parseInt(Math.random() * 100000000 % dif) + fstart
+                            }
+                        }
+                    }
+                }
+                for (n = 0; n < tnum.length; n++) {
+                    document.querySelector('#res').innerHTML += tnum[n] + '<br>'
+                }
+            }
+        }
+    }
+    function clear_res() {
+        document.querySelector('#res').innerHTML = ''
+        document.querySelector('#isshow').style.display = 'none'
+        document.querySelector('#res').style.display = 'none'
+    }
+</script>
+
+</html>
